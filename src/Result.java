@@ -11,7 +11,11 @@ public final class Result {
         this.action = action;
         if (action.getRimAction()) {
             getResultat();
-            System.out.println(transformRim());
+            if (arabResult < 0) {
+                System.out.println(minusRimResult());
+            } else if (arabResult == 0) {
+                System.out.println(arabResult);
+            } else System.out.println(transformRim());
         } else {
             getResultat();
             System.out.println(arabResult);
@@ -25,9 +29,6 @@ public final class Result {
      */
     private String transformRim() {
         int input = arabResult;
-        if (arabResult < 1 || arabResult > 100)
-            return "Invalid Roman Number Value";
-
         while (input >= 90) {
             rimResult += "XC";
             input -= 90;
@@ -79,5 +80,17 @@ public final class Result {
         if (action.getZnak() == '/') {
             arabResult = action.getValue1() / action.getValue2();
         }
+    }
+
+    /**
+     * Метод получения отрицательного значения римских цифр
+     */
+    private String minusRimResult() {
+        for (RimNumber count : RimNumber.values()) {
+            if (arabResult == count.getMinusArab()) {
+                rimResult = "-" + count.getRim();
+            }
+        }
+        return rimResult;
     }
 }
